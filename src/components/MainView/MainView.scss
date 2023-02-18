@@ -1,0 +1,22 @@
+.centerButtons {
+    display: flex;
+    justify-content: center;
+    // background-color: blue;
+    align-items: center;
+    gap: 5px;
+    padding: 10px;
+}
+
+.centerGrid {
+    display: flex;
+    justify-content: center;
+    // background-color: blue;
+    align-items: center;
+}
+
+.cardGrid {
+    width: 80%;
+    display: grid;
+    grid-template-columns: 33% 33% 33%;
+    gap: 10px;
+}

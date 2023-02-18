@@ -8,6 +8,7 @@ import {Routes, Route} from 'react-router-dom';
 
 function App() {
     return (
+        // <InitialView />
         <Routes>
             <Route path='/' element={<NavBar />}>
                 <Route index element={<MainView />} />

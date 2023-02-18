@@ -1,4 +1,3 @@
-import React from 'react';
 import './AddForm.scss';
 
 export const AddForm = () => {
