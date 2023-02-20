@@ -37,7 +37,9 @@ export const AddForm = () => {
                         <div className='select'>
                             <select>
                                 <option>Select dropdown</option>
-                                <option>With options</option>
+                                <option>Species 1</option>
+                                <option>Species 2</option>
+                                <option>Species 3</option>
                             </select>
                         </div>
                     </div>
