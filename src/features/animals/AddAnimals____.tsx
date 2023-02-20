@@ -3,7 +3,7 @@ import {useDispatch} from 'react-redux';
 import {nanoid} from '@reduxjs/toolkit';
 
 // TODO:
-import {animalAdded} from './animalsSlice';
+import {animalAdded} from '../../components/AddForm/animalsSlice';
 
 export const AddAnimals = () => {
     const [name, setName] = useState('');

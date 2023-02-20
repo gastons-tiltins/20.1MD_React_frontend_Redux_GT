@@ -6,19 +6,25 @@ const initialState = [
         id: nanoid(),
         name: 'Cat',
         image: 'https://picsum.photos/536/354',
-        species: 'Species1',
+        species: 'Cats',
     },
     {
         id: nanoid(),
         name: 'Dog',
         image: 'https://picsum.photos/536/354',
-        species: 'Species2',
+        species: 'Rodent',
     },
     {
         id: nanoid(),
         name: 'Lion',
         image: 'https://picsum.photos/536/354',
-        species: 'Species3',
+        species: 'Insects',
+    },
+    {
+        id: nanoid(),
+        name: 'Zebra',
+        image: 'https://picsum.photos/536/354',
+        species: 'Insects',
     },
 ];
 

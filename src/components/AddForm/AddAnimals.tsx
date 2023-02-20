@@ -3,32 +3,33 @@ import {useState} from 'react';
 import {useDispatch} from 'react-redux';
 import {nanoid} from '@reduxjs/toolkit';
 import './AddAnimals.scss';
+import {selectAllSpecies} from './speciesSlice';
+import {useSelector} from 'react-redux';
 
 // TODO:
-import {animalAdded} from '../../features/animals/animalsSlice';
+import {animalAdded} from './animalsSlice';
+import {speciesAdded} from './speciesSlice';
 
 export const AddAnimals = () => {
+    const speciesList = useSelector(selectAllSpecies);
+
     const navigate = useNavigate();
     const [name, setName] = useState('');
     const [image, setImage] = useState('');
-
+    const [species, setSpecies] = useState('');
     const [showForm, setShowForm] = useState(false);
 
-    const [speciesList, setSpeciesList] = useState([
-        'species1',
-        'species2',
-        'species3',
-    ]);
-
-    const [species, setSpecies] = useState('');
+    // const [speciesList, setSpeciesList] = useState([
+    //     'species1',
+    //     'species2',
+    //     'species3',
+    // ]);
 
     const dispatch = useDispatch();
 
     const onNameChanged = (e: any) => setName(e.target.value);
     const onImageChanged = (e: any) => setImage(e.target.value);
-    const onSpeciesChanged = (e: any) => {
-        setSpecies(e.target.value);
-    };
+    const onSpeciesChanged = (e: any) => setSpecies(e.target.value);
 
     const onSaveFormClicked = (e: any) => {
         e.preventDefault();
@@ -44,6 +45,11 @@ export const AddAnimals = () => {
             // setName('');
             // setImage('');
             // setSpecies('');
+
+            if (!speciesList.includes(species)) {
+                dispatch(speciesAdded(species));
+            }
+
             navigate('/');
         }
     };
@@ -61,6 +67,9 @@ export const AddAnimals = () => {
             <div>
                 <h1 className='has-text-centered'>Add Animal</h1>
             </div>
+            {/* <div>
+                <p>{JSON.stringify(speciesList)}</p>
+            </div> */}
             <form className='addAnimalForm' onSubmit={onSaveFormClicked}>
                 <div className='field'>
                     <label className='label'>Name</label>
@@ -98,8 +107,8 @@ export const AddAnimals = () => {
                                 type='text'
                                 placeholder='Species..'
                                 required
-                                // value={species}
-                                // onChange={onSpeciesChanged}
+                                value={species}
+                                onChange={onSpeciesChanged}
                             />
                         </div>
                     </div>
@@ -107,9 +116,6 @@ export const AddAnimals = () => {
                     <div className='field'>
                         <label className='label'>
                             Species (
-                            {/* <span onClick={handleShowForm}>
-                                add new species
-                            </span> */}
                             <Link to='#' onClick={handleShowForm}>
                                 add new species
                             </Link>
@@ -126,11 +132,13 @@ export const AddAnimals = () => {
                                     <option value='DISABLED' disabled>
                                         Select dropdown
                                     </option>
-                                    {speciesList.map((specie, index) => (
-                                        <option key={index} value={specie}>
-                                            {specie}
-                                        </option>
-                                    ))}
+                                    {speciesList.map(
+                                        (specie: any, index: any) => (
+                                            <option key={index} value={specie}>
+                                                {specie}
+                                            </option>
+                                        ),
+                                    )}
                                 </select>
                             </div>
                         </div>

@@ -1,6 +1,6 @@
 import {useSelector} from 'react-redux';
 // import {selectAllPosts} from '../posts/postsSlice';
-import {selectAllAnimals} from '../animals/animalsSlice';
+import {selectAllAnimals} from '../../components/AddForm/animalsSlice';
 
 export const AnimalsList = () => {
     const animals = useSelector(selectAllAnimals);
