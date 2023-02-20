@@ -1,8 +1,10 @@
+import {useNavigate} from 'react-router-dom';
 import React from 'react';
 import {Card} from '../Card/Card';
 import './MainView.scss';
 import {nanoid} from '@reduxjs/toolkit';
 import {useState} from 'react';
+import {useEffect} from 'react';
 
 import {useSelector} from 'react-redux';
 import {selectAllAnimals} from '../AddForm/animalsSlice';
@@ -17,10 +19,40 @@ export interface Animals {
 }
 
 export const MainView = () => {
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const [allAnimals, setAllAnimals] = useState([]);
+
     const animals = useSelector(selectAllAnimals);
     const speciesList = useSelector(selectAllSpecies);
+
+    //first data get
+    // useEffect(() => {
+    //     const storedAnimals = localStorage.getItem('animals');
+    //     // dispatch(setLoading(true));
+    //     dispatch(
+    //         setAllAnimals(storedAnimals ? JSON.parse(storedAnimals) : []),
+    //     );
+    //     // dispatch(setLoading(false));
+    // }, []);
+
+    // const [animalState, setAnimalState] = useState([]);
+
+    // useEffect(() => {
+    //     const animalsFromLocalStorage =
+    //         JSON.parse(localStorage.getItem('allAnimals') as any) || '[]';
+    //     if (animals) {
+    //         setAnimalState(animals);
+    //     }
+    // }, []);
+
+    // const animals = animalsFromLocalStorage;
+
     const [printData, setPrintData] = useState(animals);
-    const dispatch = useDispatch();
+
+    // useEffect(() => {
+    //     localStorage.setItem('allAnimals', JSON.stringify(animals));
+    // }, [animals]);
 
     // dispatch(selectAllAnimals(storedAnimals ? JSON.parse(storedAnimals) : []));
 
@@ -36,8 +68,8 @@ export const MainView = () => {
             }
         });
 
-        console.log(specie);
-        console.log(printSpecie);
+        // console.log(specie);
+        // console.log(printSpecie);
 
         setPrintData(printSpecie);
     };
@@ -61,9 +93,15 @@ export const MainView = () => {
         );
     };
 
+    const handleAddAnimals = (e: any) => {
+        navigate('/add');
+    };
+
     return (
         <div className=''>
             {/* <p>{JSON.stringify(speciesList)}</p> */}
+            {/* <p>{JSON.stringify(animals)}</p> */}
+
             <div className='centerButtons'>
                 <button
                     onClick={printAllAnimals}
@@ -82,7 +120,23 @@ export const MainView = () => {
                 ))}
             </div>
             <div className='centerGrid'>
-                <PrintAllCards inputData={printData} />
+                {printData.length > 0 ? (
+                    <PrintAllCards inputData={printData} />
+                ) : (
+                    <div className='flexCenterColumn control'>
+                        <div>
+                            <h1>No animals added yet</h1>
+                        </div>
+                        <div>
+                            <button
+                                className='button is-link'
+                                onClick={handleAddAnimals}
+                            >
+                                Add animal
+                            </button>
+                        </div>
+                    </div>
+                )}
             </div>
         </div>
     );

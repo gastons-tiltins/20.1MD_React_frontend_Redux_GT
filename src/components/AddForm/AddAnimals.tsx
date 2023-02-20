@@ -6,7 +6,6 @@ import './AddAnimals.scss';
 import {selectAllSpecies} from './speciesSlice';
 import {useSelector} from 'react-redux';
 
-// TODO:
 import {animalAdded} from './animalsSlice';
 import {speciesAdded} from './speciesSlice';
 
@@ -16,14 +15,8 @@ export const AddAnimals = () => {
     const navigate = useNavigate();
     const [name, setName] = useState('');
     const [image, setImage] = useState('');
-    const [species, setSpecies] = useState('');
+    const [species, setSpecies] = useState([]);
     const [showForm, setShowForm] = useState(false);
-
-    // const [speciesList, setSpeciesList] = useState([
-    //     'species1',
-    //     'species2',
-    //     'species3',
-    // ]);
 
     const dispatch = useDispatch();
 
@@ -51,6 +44,7 @@ export const AddAnimals = () => {
             }
 
             navigate('/');
+            setShowForm(false);
         }
     };
 

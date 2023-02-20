@@ -1,31 +1,16 @@
 import {createSlice} from '@reduxjs/toolkit';
 import {nanoid} from '@reduxjs/toolkit';
+import {useEffect, useState} from 'react';
 
-const initialState = [
-    {
-        id: nanoid(),
-        name: 'Cat',
-        image: 'https://picsum.photos/536/354',
-        species: 'Cats',
-    },
-    {
-        id: nanoid(),
-        name: 'Dog',
-        image: 'https://picsum.photos/536/354',
-        species: 'Rodent',
-    },
-    {
-        id: nanoid(),
-        name: 'Lion',
-        image: 'https://picsum.photos/536/354',
-        species: 'Insects',
-    },
-    {
-        id: nanoid(),
-        name: 'Zebra',
-        image: 'https://picsum.photos/536/354',
-        species: 'Insects',
-    },
+// const animalsFromLocalStorage = localStorage.getItem('allAnimals') || '[]';
+
+const initialState: any = [
+    // {
+    //     id: nanoid(),
+    //     name: 'Cat',
+    //     image: 'https://picsum.photos/536/354',
+    //     species: 'Cats',
+    // },
 ];
 
 const animalsSlice = createSlice({

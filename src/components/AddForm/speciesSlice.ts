@@ -1,5 +1,5 @@
 import {createSlice} from '@reduxjs/toolkit';
-const initialState = ['Cats', 'Rodent', 'Insects'];
+const initialState: string[] = [];
 
 const speciesSlice = createSlice({
     name: 'species',
