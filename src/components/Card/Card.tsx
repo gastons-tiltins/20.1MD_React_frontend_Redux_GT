@@ -1,27 +1,17 @@
 import {useSelector} from 'react-redux';
-import {selectAllAnimals} from '../AddForm/animalsSlice';
+import {selectAllAnimals} from '../../app/animalsSlice';
 import './Card.scss';
 import {nanoid} from '@reduxjs/toolkit';
-import {animalAdded} from '../AddForm/animalsSlice';
 import {useDispatch} from 'react-redux';
 
-export interface Animals {
+export interface Animal {
     id: string;
     name: string;
     image: string;
     species: string;
+    onDelete: () => void;
 }
-export const Card = ({id, name, image, species}: Animals) => {
-    const dispatch = useDispatch();
-    const {animals} = useSelector(selectAllAnimals);
-
-    const handleDelete = (id: any) => {
-        if (id) {
-            console.log(id);
-            //TODO: delete animal
-        }
-    };
-
+export const Card = ({id, name, image, species, onDelete}: Animal) => {
     return (
         <div className='card gridStretch'>
             <div className='card-image'>
@@ -30,17 +20,17 @@ export const Card = ({id, name, image, species}: Animals) => {
                 </figure>
             </div>
             <div className='card-content'>
-                <div className='media'>
-                    <div className='media-content'>
-                        <p className='title is-5 has-text-centered'>{name}</p>
-                    </div>
+                <div className='content has-text-centered'>
+                    <p className='title is-5 has-text-centered'>{name}</p>
                 </div>
                 <div className='content has-text-centered'>
                     <p>{species}</p>
                 </div>
-                {/* <div>
-                    <button onClick={() => handleDelete(id)}>Delete</button>
-                </div> */}
+                <div>
+                    <button className='button is-link' onClick={onDelete}>
+                        Delete
+                    </button>
+                </div>
             </div>
         </div>
     );

@@ -1,70 +1,51 @@
-import {Link, Routes, Route, useNavigate} from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 import {useState} from 'react';
 import {useDispatch} from 'react-redux';
 import {nanoid} from '@reduxjs/toolkit';
 import './AddAnimals.scss';
-import {selectAllSpecies} from './speciesSlice';
+import {selectAllSpecies} from '../../app/speciesSlice';
 import {useSelector} from 'react-redux';
-
-import {animalAdded} from './animalsSlice';
-import {speciesAdded} from './speciesSlice';
+import {addAnimal} from '../../app/animalsSlice';
+import {addSpecies} from '../../app/speciesSlice';
 
 export const AddAnimals = () => {
     const speciesList = useSelector(selectAllSpecies);
 
     const navigate = useNavigate();
-    const [name, setName] = useState('');
-    const [image, setImage] = useState('');
-    const [species, setSpecies] = useState([]);
-    const [showForm, setShowForm] = useState(false);
+    const [formData, setFormData] = useState({
+        name: '',
+        image: '',
+        species: '',
+    });
 
+    const [showSpeciesForm, setShowSpeciesForm] = useState(false);
     const dispatch = useDispatch();
-
-    const onNameChanged = (e: any) => setName(e.target.value);
-    const onImageChanged = (e: any) => setImage(e.target.value);
-    const onSpeciesChanged = (e: any) => setSpecies(e.target.value);
-
-    const onSaveFormClicked = (e: any) => {
-        e.preventDefault();
-        if (name && image && species) {
-            dispatch(
-                animalAdded({
-                    id: nanoid(),
-                    name,
-                    image,
-                    species,
-                }),
-            );
-            // setName('');
-            // setImage('');
-            // setSpecies('');
-
-            if (!speciesList.includes(species)) {
-                dispatch(speciesAdded(species));
-            }
-
-            navigate('/');
-            setShowForm(false);
-        }
-    };
-
-    const handleCancel = (e: any) => {
-        navigate('/');
-    };
-
-    const handleShowForm = (e: any) => {
-        setShowForm(true);
-    };
 
     return (
         <div className='addFormContainer has-background-grey-light'>
             <div>
                 <h1 className='has-text-centered'>Add Animal</h1>
             </div>
-            {/* <div>
-                <p>{JSON.stringify(speciesList)}</p>
-            </div> */}
-            <form className='addAnimalForm' onSubmit={onSaveFormClicked}>
+            <form
+                className='addAnimalForm'
+                onSubmit={(e) => {
+                    e.preventDefault();
+
+                    dispatch(addAnimal({...formData, id: nanoid()}));
+
+                    setFormData({
+                        name: '',
+                        image: '',
+                        species: '',
+                    });
+
+                    if (!speciesList.includes(formData.species)) {
+                        dispatch(addSpecies(formData.species));
+                    }
+
+                    navigate('/');
+                }}
+            >
                 <div className='field'>
                     <label className='label'>Name</label>
                     <div className='control'>
@@ -74,8 +55,10 @@ export const AddAnimals = () => {
                             placeholder='Animal name..'
                             required
                             maxLength={20}
-                            value={name}
-                            onChange={onNameChanged}
+                            value={formData.name}
+                            onChange={(e) =>
+                                setFormData({...formData, name: e.target.value})
+                            }
                         />
                     </div>
                 </div>
@@ -87,12 +70,17 @@ export const AddAnimals = () => {
                             type='url'
                             placeholder='http..'
                             required
-                            value={image}
-                            onChange={onImageChanged}
+                            value={formData.image}
+                            onChange={(e) =>
+                                setFormData({
+                                    ...formData,
+                                    image: e.target.value,
+                                })
+                            }
                         />
                     </div>
                 </div>
-                {showForm ? (
+                {showSpeciesForm ? (
                     <div className='field'>
                         <label className='label'>Species</label>
                         <div className='control'>
@@ -101,8 +89,13 @@ export const AddAnimals = () => {
                                 type='text'
                                 placeholder='Species..'
                                 required
-                                value={species}
-                                onChange={onSpeciesChanged}
+                                value={formData.species}
+                                onChange={(e) =>
+                                    setFormData({
+                                        ...formData,
+                                        species: e.target.value,
+                                    })
+                                }
                             />
                         </div>
                     </div>
@@ -110,18 +103,24 @@ export const AddAnimals = () => {
                     <div className='field'>
                         <label className='label'>
                             Species (
-                            <Link to='#' onClick={handleShowForm}>
+                            <span onClick={() => setShowSpeciesForm(true)}>
                                 add new species
-                            </Link>
+                            </span>
                             )
                         </label>
                         <div className='control'>
                             <div className='select'>
                                 <select
-                                    defaultValue={'DISABLED'}
-                                    onChange={onSpeciesChanged}
+                                    onChange={(e) =>
+                                        setFormData({
+                                            ...formData,
+                                            species: e.target.value,
+                                        })
+                                    }
+                                    // value={formData.species}
                                     name='fruits'
                                     id='fruit-select'
+                                    defaultValue='DISABLED'
                                 >
                                     <option value='DISABLED' disabled>
                                         Select dropdown
@@ -144,7 +143,8 @@ export const AddAnimals = () => {
                     </div>
                     <div className='control'>
                         <button
-                            onClick={handleCancel}
+                            type='button'
+                            onClick={() => navigate('/')}
                             className='button is-link'
                         >
                             Cancel

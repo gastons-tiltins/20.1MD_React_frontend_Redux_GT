@@ -1,6 +1,6 @@
 import {configureStore} from '@reduxjs/toolkit';
-import animalsReducer from '../components/AddForm/animalsSlice';
-import speciesReducer from '../components/AddForm/speciesSlice';
+import animalsReducer from './animalsSlice';
+import speciesReducer from './speciesSlice';
 
 export const store = configureStore({
     reducer: {
@@ -8,3 +8,5 @@ export const store = configureStore({
         species: speciesReducer,
     },
 });
+
+export type RootState = ReturnType<typeof store.getState>;
