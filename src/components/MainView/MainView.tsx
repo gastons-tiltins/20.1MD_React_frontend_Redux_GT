@@ -23,19 +23,34 @@ export const MainView = () => {
 
     const animals: any = useSelector(selectAllAnimals);
     const speciesList = useSelector(selectAllSpecies);
-
     const [printData, setPrintData] = useState(animals);
 
     const handleAddAnimals = (e: any) => {
         navigate('/add');
     };
 
+    const speciesCount = (specie: string) => {
+        let speciesCount = 0;
+        animals.map((animal: any) => {
+            if (animal.species === specie) {
+                speciesCount++;
+            }
+        });
+
+        if (speciesCount <= 1) {
+            return true;
+        } else {
+            return false;
+        }
+    };
+
     const handleDelete = (id: string, species: string) => {
         dispatch(removeAnimal(id));
-        console.log(id);
-        console.log(species);
-        console.log(speciesList);
-        dispatch(removeSpecies(species));
+
+        if (speciesCount(species) === true) {
+            dispatch(removeSpecies(species));
+        }
+
         location.reload();
     };
 
@@ -78,12 +93,14 @@ export const MainView = () => {
     return (
         <div>
             <div className='centerButtons'>
-                <button
-                    onClick={printAllAnimals}
-                    className='button is-link is-light'
-                >
-                    All
-                </button>
+                {printData.length > 0 && (
+                    <button
+                        onClick={printAllAnimals}
+                        className='button is-link is-light'
+                    >
+                        All
+                    </button>
+                )}
                 {speciesList.map((specie: any) => (
                     <button
                         onClick={() => printSelectedAnimals(specie)}

@@ -12,3 +12,19 @@
     align-self: center;
     // padding: 5px;
 }
+
+.addSpeciesLink {
+    color: blue;
+    text-decoration: underline;
+
+    &:hover {
+        color: red;
+        cursor: pointer;
+    }
+
+    a:active {
+        color: yellow;
+        background-color: transparent;
+        text-decoration: underline;
+    }
+}

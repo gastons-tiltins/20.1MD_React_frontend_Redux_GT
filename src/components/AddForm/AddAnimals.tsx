@@ -80,9 +80,19 @@ export const AddAnimals = () => {
                         />
                     </div>
                 </div>
+                <label className='label'>
+                    Species (
+                    <span
+                        className='addSpeciesLink'
+                        onClick={() => setShowSpeciesForm(!showSpeciesForm)}
+                    >
+                        add new species
+                    </span>
+                    )
+                </label>
                 {showSpeciesForm ? (
                     <div className='field'>
-                        <label className='label'>Species</label>
+                        {/* <label className='label'>Species</label> */}
                         <div className='control'>
                             <input
                                 className='input'
@@ -101,13 +111,6 @@ export const AddAnimals = () => {
                     </div>
                 ) : (
                     <div className='field'>
-                        <label className='label'>
-                            Species (
-                            <span onClick={() => setShowSpeciesForm(true)}>
-                                add new species
-                            </span>
-                            )
-                        </label>
                         <div className='control'>
                             <div className='select'>
                                 <select
