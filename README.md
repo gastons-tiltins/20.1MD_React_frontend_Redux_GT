@@ -1,5 +1,17 @@
-# React Redux Animal cards with filtering
+# React frontend with Redux and React router
+## Add, delete, sort by categories functionality
+## Select existing or add new categories
 
-### `npm i`
+Preview:
 
-### `npm run dev`
+![alt text](https://kastad.nu/gitHubRepoImages/md20-1.png)
+
+Instructions:
+
+```
+npm i
+```
+
+```
+npm run dev
+```
